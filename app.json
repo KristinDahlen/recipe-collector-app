@@ -1,0 +1,12 @@
+{
+  "name": "recipe-collector-app",
+  "displayName": "recipe-collector-app",
+  "expo": {
+    "name": "recipe-collector-app",
+    "slug": "recipe-collector-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

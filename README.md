@@ -1,2 +1,2 @@
 # recipe-collector-app
-Recipe collector flutter app
+Recipe collector React Native app
