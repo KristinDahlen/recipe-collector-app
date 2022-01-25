@@ -8,21 +8,15 @@ const logError = (e) => {
 }
 
 const logNonOkResponse = async (res) => {
-    if (res.status < 400) {
-        return
+    if (res.status > 400) {
+        const { error, message, statusCode } = await res.json();
+        console.log(`Server responded with: ${statusCode} - ${error} - ${message}`);
     }
-    const { error, message, statusCode } = await res.json();
-    console.log(`Server responded with: ${statusCode} - ${error} - ${message}`);
     return res;
 }
 
-export const callApi = (url, req, callback = () => { }, errorCallback = () => { }) => {
-    fetch(url)
+export const callApi = (url, req = null) => {
+    return fetch(url, req)
         .then(logRequest)
-        .then(logNonOkResponse)
-        .then(callback)
-        .catch((e) => {
-            logError(e);
-            errorCallback(e);
-        });
+        .then(logNonOkResponse);
 }
