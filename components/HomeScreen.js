@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ScrollView, SafeAreaView, StyleSheet } from "react-native";
 import Navigation from "./Navigation";
 import RecipeTips from "./RecipeTips";
 import TopLevelCategories from "./TopLevelCategories";
 
+import LoginContext from "../context/LoginContext";
 import apiHandler from "./../api/handler";
 
-const credentials = { email: '', password: '' } //TODO get from config
-
 const HomeScreen = () => {
-  const login = async () => {
-    if (token) {
-      //check if still valid via /me route
-      const now = new Date(Date.now());
-      console.log(now.toString(), '- Token is valid');
-      return;
-    }
-    const t = await apiHandler.login(credentials);
-    setToken(t);
-  }
+  const token = useContext(LoginContext);
 
   const getRecipes = async () => {
     if (!token) {
@@ -35,11 +25,7 @@ const HomeScreen = () => {
     recipes.forEach(r => console.log('Recept id:', r.id, 'Title:', r.title));
   }
 
-  const [token, setToken] = useState();
-  useEffect(() => {
-    login();
-    getRecipes();
-  });
+  useEffect(getRecipes);
 
   return (
     <ScrollView>
