@@ -1,16 +1,16 @@
-import * as React from "react";
+import React from "react";
 import { ScrollView, SafeAreaView, StyleSheet } from "react-native";
 import Navigation from "./Navigation";
 import RecipeTips from "./RecipeTips";
 import TopLevelCategories from "./TopLevelCategories";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <SafeAreaView>
         <Navigation />
         <RecipeTips />
-        <TopLevelCategories />
+        <TopLevelCategories navigation={navigation} />
       </SafeAreaView>
     </ScrollView>
   );
