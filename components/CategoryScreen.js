@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Image,
@@ -7,13 +7,55 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
-import database from "../database.json";
+
+import LoginContext from "../context/LoginContext";
+import apiHandler from "./../api/handler";
 
 const CategoryView = ({ route }) => {
-  const recipes = database.recipes;
+  const getRecipes = async () => {
+    if (!token) {
+      console.log("Not logged in");
+      throw new Error("Not logged in");
+    }
+    const recipes = await apiHandler.getRecipes(token);
+
+    if (!recipes) {
+      console.log("Recipes could not be loaded");
+      throw new Error("Recipes could not be loaded");
+    }
+
+    return recipes;
+  }
+
+  const [recipes, setRecipes] = useState();
+  const [error, setError] = useState();
+  const token = useContext(LoginContext);
+
+  useEffect(() => {
+    getRecipes()
+      .then(setRecipes)
+      .catch(e => setError(e.message));
+  }, []);
+
   const category = route.params.category;
 
-  const recipe = () => {
+  const renderError = () => {
+    return (
+      <View style={styles.container}>
+        <Text style={{ fontSize: 25, fontWeight: "bold", color: "black" }}>{error}</Text>
+      </View>
+    );
+  }
+
+  const renderEmpty = () => {
+    return (
+      <View style={styles.container}>
+        <Text style={{ fontSize: 25, fontWeight: "bold", color: "black" }}>No recipes! Click somwhere to make one</Text>
+      </View>
+    );
+  }
+
+  const renderRecipes = () => {
     return recipes.map((recipe, index) => (
       <View style={styles.container} key={index}>
         <Image
@@ -31,9 +73,18 @@ const CategoryView = ({ route }) => {
       </View>
     ));
   };
+
+  const renderView = () => {
+    if (error) {
+      return renderError();
+    } else if (recipes) {
+      return recipes.length == 0 ? renderEmpty() : renderRecipes();
+    }
+  }
+
   return (
     <ScrollView>
-      <SafeAreaView>{recipe()}</SafeAreaView>
+      <SafeAreaView>{renderView()}</SafeAreaView>
     </ScrollView>
   );
 };
