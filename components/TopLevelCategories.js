@@ -1,29 +1,34 @@
 import React from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const TopLevelCategories = () => {
+const TopLevelCategories = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topLevelCategoryContainer}>
-        <View style={styles.categoryContainer}>
+        <TouchableOpacity
+          style={styles.categoryContainer}
+          onPress={() =>
+            navigation.navigate("Category", { category: "Frukost" })
+          }
+        >
           <Image source={require("../images/breakfast_icon.png")} />
           <Text>Frukost</Text>
-        </View>
-        <View style={styles.categoryContainer}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.categoryContainer}>
           <Image source={require("../images/lunch_icon.png")} />
           <Text>Lunch</Text>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.topLevelCategoryContainer}>
-        <View style={styles.categoryContainer}>
+        <TouchableOpacity style={styles.categoryContainer}>
           <Image source={require("../images/dinner_icon.png")} />
           <Text>Middag</Text>
-        </View>
-        <View style={styles.categoryContainer}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.categoryContainer}>
           <Image source={require("../images/snacks_icon.png")} />
           <Text>Snacks</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

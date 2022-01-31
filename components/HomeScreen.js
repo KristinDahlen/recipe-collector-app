@@ -7,7 +7,7 @@ import TopLevelCategories from "./TopLevelCategories";
 import LoginContext from "../context/LoginContext";
 import apiHandler from "./../api/handler";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const token = useContext(LoginContext);
 
   const getRecipes = async () => {
@@ -32,7 +32,7 @@ const HomeScreen = () => {
       <SafeAreaView>
         <Navigation />
         <RecipeTips />
-        <TopLevelCategories />
+        <TopLevelCategories navigation={navigation} />
       </SafeAreaView>
     </ScrollView>
   );

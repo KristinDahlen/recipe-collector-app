@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './components/HomeScreen'
+import CategoryScreen from "./components/CategoryScreen";
 
 import { TokenProvider } from './context/LoginContext';
 import apiHandler from './api/handler';
@@ -36,6 +37,7 @@ export default App = () => {
               headerShown: false,
             }}
           />
+          <Stack.Screen name="Category" component={CategoryScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </TokenProvider>
